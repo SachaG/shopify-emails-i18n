@@ -1,0 +1,1 @@
+Order {{ name }} has been canceled
