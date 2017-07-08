@@ -1,9 +1,22 @@
-{% capture email_title %} Votre panier vous attend {% endcapture %}
-{% capture email_body %}
-{% if billing_address.first_name %}Bonjour {{ billing_address.first_name }}, n{% else %}
-N{% endif %}ous avons remarqué qu'il y avait {% if item_count == 1 %}un article{% else %}des articles{% endif %} en attente dans votre panier.
-Si vous êtes prêt à compléter votre commande, votre panier attend votre retour.
-{% endcapture %}
+{% if fulfillment.item_count == item_count %} 
+  {% capture shipment_name %}Votre commande est{% endcapture %}
+{% elsif fulfillment.item_count > 1 %} 
+  {% if fulfillment_status == 'fulfilled' %}
+    {% capture shipment_name %}Les derniers articles de votre commande sont{% endcapture %}
+  {% else %}
+    {% capture shipment_name %}Certains articles de votre commande sont{% endcapture %}
+  {% endif %}
+{% else %} 
+  {% if fulfillment_status == 'fulfilled' %}
+    {% capture shipment_name %}Le dernier article de votre commande est{% endcapture %}
+  {% else %}
+    {% capture shipment_name %}Un article de votre commande est{% endcapture %}
+  {% endif %}
+{% endif %}
+
+{% capture email_title %}{{ shipment_name }} en cours{% endcapture %}
+{% capture email_body %}{{ shipment_name }} en cours de livraison. Suivez le colis pour voir l'état de la livraison.{% endcapture %}
+{% capture email_emphasis %}Date de livraison estimée: <strong>{{fulfillment.estimated_delivery_at | date: "%B %d, %Y"}}</strong>{% endcapture %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +56,11 @@ Si vous êtes prêt à compléter votre commande, votre panier attend votre reto
                     {%- endif %}
                   </td>
 
+                    <td class="order-number__cell">
+                      <span class="order-number__text">
+                        Order {{ order_name }}
+                      </span>
+                    </td>
                 </tr>
               </table>
 
@@ -64,23 +82,23 @@ Si vous êtes prêt à compléter votre commande, votre panier attend votre reto
             <td>
               
             <h2>{{ email_title }}</h2>
-            {% if custom_message != blank %}
-              <p>{{ custom_message }}</p>
-            {% else %}
-              <p>{{ email_body }}</p>
+            <p>{{ email_body }}</p>
+            {% if fulfillment.estimated_delivery_at %}
+              <p>{{ email_emphasis }}</p>
             {% endif %}
-            <table class="row actions">
+            {% if order_status_url %}
+              <table class="row actions">
   <tr>
     <td class="actions__cell">
       <table class="button main-action-cell">
         <tr>
-          <td class="button__cell"><a href="{{ url }}" class="button__text">Finissez votre commande</a></td>
+          <td class="button__cell"><a href="{{ order_status_url }}" class="button__text">Suivre ma livraison</a></td>
         </tr>
       </table>
       {% if shop.url %}
     <table class="link secondary-action-cell">
       <tr>
-        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>or</span> Accédez à notre boutique</a></td>
+        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>ou</span> Accédez à notre boutique</a></td>
       </tr>
     </table>
 {% endif %}
@@ -89,6 +107,22 @@ Si vous êtes prêt à compléter votre commande, votre panier attend votre reto
   </tr>
 </table>
 
+            {% else %}
+              {% if shop.url %}
+    <table class="row actions">
+      <tr>
+        <td class="actions__cell">
+          <table class="button main-action-cell">
+            <tr>
+              <td class="button__cell"><a href="{{ shop.url }}" class="button__text">Accédez à notre boutique</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+{% endif %}
+
+            {% endif %}
 
             </td>
           </tr>
@@ -105,7 +139,7 @@ Si vous êtes prêt à compléter votre commande, votre panier attend votre reto
         <table class="container">
           <tr>
             <td>
-              <h3>Articles dans votre panier</h3>
+              <h3>Articles à livrer</h3>
             </td>
           </tr>
         </table>
@@ -115,32 +149,32 @@ Si vous êtes prêt à compléter votre commande, votre panier attend votre reto
               
             
 <table class="row">
-  {% for line in line_items %}
+  {% for line in fulfillment.fulfillment_line_items %}
   <tr class="order-list__item">
     <td class="order-list__item__cell">
       <table>
         <td>
-          {% if line.image %}
-            <img src="{{ line | img_url: 'compact_cropped' }}" align="left" width="60" height="60" class="order-list__product-image"/>
+          {% if line.line_item.image %}
+            <img src="{{ line.line_item | img_url: 'compact_cropped' }}" align="left" width="60" height="60" class="order-list__product-image"/>
           {% endif %}
         </td>
         <td class="order-list__product-description-cell">
-          {% if line.product.title %}
-            {% assign line_title = line.product.title %}
+          {% if line.line_item.product.title %}
+            {% assign line_title = line.line_item.product.title %}
           {% else %}
-            {% assign line_title = line.title %}
+            {% assign line_title = line.line_item.title %}
           {% endif %}
 
-          {% if line.quantity < line.quantity %}
-            {% capture line_display %} {{ line.quantity }} of {{ line.quantity }} {% endcapture %}
+          {% if line.quantity < line.line_item.quantity %}
+            {% capture line_display %} {{ line.quantity }} de {{ line.line_item.quantity }} {% endcapture %}
           {% else %}
-            {% assign line_display = line.quantity  %}
+            {% assign line_display = line.line_item.quantity  %}
           {% endif %}
 
           <span class="order-list__item-title">{{ line_title }} × {{ line_display }}</span><br/>
 
-          {% if line.variant.title != 'Default Title' %}
-            <span class="order-list__item-variant">{{ line.variant.title }}</span>
+          {% if line.line_item.variant.title != 'Default Title' %}
+            <span class="order-list__item-variant">{{ line.line_item.variant.title }}</span>
           {% endif %}
         </td>
       </table>
@@ -164,7 +198,7 @@ Si vous êtes prêt à compléter votre commande, votre panier attend votre reto
         <table class="container">
           <tr>
             <td>
-              <p class="disclaimer__subtext">Si vous avez des questions, répondez à cet email ou bien contactez-nous à <a href="mailto:{{ shop.email }}">{{ shop.email }}</a></p>
+              <p class="disclaimer__subtext">Si vous avez des questions, répondez à cet email ou contactez-nous à <a href="mailto:{{ shop.email }}">{{ shop.email }}</a></p>
             </td>
           </tr>
         </table>

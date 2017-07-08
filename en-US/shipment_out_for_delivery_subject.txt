@@ -1,0 +1,1 @@
+A shipment from order {{ name }} is out for delivery

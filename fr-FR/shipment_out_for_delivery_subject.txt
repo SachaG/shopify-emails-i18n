@@ -1,0 +1,1 @@
+Un envoi pour la commande {{ name }} est en cours de livraison

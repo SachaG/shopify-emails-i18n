@@ -415,7 +415,7 @@
         <table class="container">
           <tr>
             <td>
-              <p class="disclaimer__subtext">Si vous avez des questions, répondez à cet email ou contactez-nous : <a href="mailto:{{ shop.email }}">{{ shop.email }}</a></p>
+              <p class="disclaimer__subtext">Si vous avez des questions, répondez à cet email ou contactez-nous à <a href="mailto:{{ shop.email }}">{{ shop.email }}</a></p>
             </td>
           </tr>
         </table>

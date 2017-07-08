@@ -1,5 +1,5 @@
 {% capture email_title %}Finissez votre achat{% endcapture %}
-{% capture email_body %}{% if item_count > 1 %}Ces produits{% else %}Ce produit{% endif %} {% if item_count > 1 %}seront réservés{% else %}sera réservé{% endif %} pour vous jusqu'au: <strong>{{ reserve_inventory_until | date: "%B %d, %Y à %H:%M %Z" }}</strong>{% endcapture %}
+{% capture email_body %}{% if item_count > 1 %}Ces articles{% else %}Cet article{% endif %} {% if item_count > 1 %}seront réservés{% else %}sera réservé{% endif %} pour vous jusqu'au: <strong>{{ reserve_inventory_until | date: "%B %d, %Y à %H:%M %Z" }}</strong>{% endcapture %}
 
 <!DOCTYPE html>
 <html lang="en">
