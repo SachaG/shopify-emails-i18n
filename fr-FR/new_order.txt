@@ -1,0 +1,31 @@
+<p>Bonjour {{ shop_name }},</p>
+<p></p>
+<p>{% if customer.name %}{{ customer.name }}{% else %}Quelqu'un{% endif %} a placé une nouvelle commande chez votre boutique, le {{ date | date: "%b %d %I:%M%p" }}:</p>
+<p></p>
+<ul>  {% for line in line_items %} <li> <img src="{{ line | img_url: 'thumb' }}" /> {{ line.quantity }}x {{ line.title }} {% if line.sku != "" %}(SKU: {{line.sku}}){% endif %} pour {{ line.price | money }} chacun </li> {% endfor %} </ul>
+<a href="https://{{ shop.permanent_domain }}/admin/orders/{{ id }}">Voir la commande {{order_name}} </a>
+{% if fulfillment_aborted %}
+<p>La commande ci-dessus n'a pas été traitée automatiquement car elle a été détectée comme suspecte.</p>{% endif %}
+<p></p><br>
+{% if has_high_risks? %}<p><b>Security check:</b></p>
+<p>Cette commande a un haut risque d'être frauduleuse. Vérifiez la commande dans le tableau de bord de votre boutique, et contactez le client pour vérifier leurs informations. </p>
+<p></p>{% endif %}
+<p><b>Méthode de traitement du paiement:</b></p>
+<p>{{ gateway }}</p>
+<p></p>
+{% if requires_shipping and shipping_address %}
+<p><b>Méthode de livraison:</b></p>
+{% for shipping_method in shipping_methods %}<p>{{ shipping_method.title }}</p>{% endfor %}
+<p></p>
+<p><b>Adresse de livraison:</b></p>
+<p>{{ shipping_address.name }}</p>
+<p>{{ shipping_address.street }}</p>
+<p>{{ shipping_address.city }}, {{ shipping_address.province }}  {{ shipping_address.zip }}</p>
+<p>{{ shipping_address.country }}</p>
+<p>{{ shipping_address.phone }}{% endif %}</p>
+<p></p>
+
+{% if shopify_shipping_enabled %}
+<p>Gagnez du temps et de l'argent avec <a href="{{ fulfillment_url }}">le service Shopify Shipping</a></p>
+<p></p>
+{% endif %}

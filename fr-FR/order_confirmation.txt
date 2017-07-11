@@ -82,7 +82,7 @@
       {% if shop.url %}
     <table class="link secondary-action-cell">
       <tr>
-        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>or</span> Visiter la boutique Hariko</a></td>
+        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>ou</span> Accéder à la boutique</a></td>
       </tr>
     </table>
 {% endif %}

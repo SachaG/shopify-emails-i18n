@@ -95,13 +95,13 @@
     <td class="actions__cell">
       <table class="button main-action-cell">
         <tr>
-          <td class="button__cell"><a href="{{ order_status_url }}" class="button__text">Voire votre commande</a></td>
+          <td class="button__cell"><a href="{{ order_status_url }}" class="button__text">Voir votre commande</a></td>
         </tr>
       </table>
       {% if shop.url %}
     <table class="link secondary-action-cell">
       <tr>
-        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>ou</span> Accéder à notre boutique</a></td>
+        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>ou</span> Accéder à la boutique</a></td>
       </tr>
     </table>
 {% endif %}
@@ -117,7 +117,7 @@
         <td class="actions__cell">
           <table class="button main-action-cell">
             <tr>
-              <td class="button__cell"><a href="{{ shop.url }}" class="button__text">Accéder à notre boutique</a></td>
+              <td class="button__cell"><a href="{{ shop.url }}" class="button__text">Accéder à la boutique</a></td>
             </tr>
           </table>
         </td>

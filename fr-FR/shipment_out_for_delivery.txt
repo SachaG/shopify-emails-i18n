@@ -58,7 +58,7 @@
 
                     <td class="order-number__cell">
                       <span class="order-number__text">
-                        Order {{ order_name }}
+                        Commande {{ order_name }}
                       </span>
                     </td>
                 </tr>
@@ -98,7 +98,7 @@
       {% if shop.url %}
     <table class="link secondary-action-cell">
       <tr>
-        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>ou</span> Accédez à notre boutique</a></td>
+        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>ou</span> Accéder à la boutique</a></td>
       </tr>
     </table>
 {% endif %}
@@ -114,7 +114,7 @@
         <td class="actions__cell">
           <table class="button main-action-cell">
             <tr>
-              <td class="button__cell"><a href="{{ shop.url }}" class="button__text">Accédez à notre boutique</a></td>
+              <td class="button__cell"><a href="{{ shop.url }}" class="button__text">Accéder à la boutique</a></td>
             </tr>
           </table>
         </td>

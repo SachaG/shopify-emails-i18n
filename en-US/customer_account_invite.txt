@@ -1,9 +1,5 @@
-{% capture email_title %} Votre panier vous attend {% endcapture %}
-{% capture email_body %}
-{% if billing_address.first_name %}Bonjour {{ billing_address.first_name }}, n{% else %}
-N{% endif %}ous avons remarqué qu'il y avait {% if item_count == 1 %}un article{% else %}des articles{% endif %} en attente dans votre panier.
-Si vous êtes prêt à compléter votre commande, votre panier attend votre retour.
-{% endcapture %}
+{% capture email_title %} Activate your account {% endcapture %}
+{% capture email_body %}Hi {{ customer.first_name }}, you've created a new customer account at <a href="{{shop.url}}">{{shop.name}}</a>. All you have to do is activate it and choose a password. {% endcapture %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -74,13 +70,13 @@ Si vous êtes prêt à compléter votre commande, votre panier attend votre reto
     <td class="actions__cell">
       <table class="button main-action-cell">
         <tr>
-          <td class="button__cell"><a href="{{ url }}" class="button__text">Finir votre commande</a></td>
+          <td class="button__cell"><a href="{{ customer.account_activation_url }}" class="button__text">Activate your account</a></td>
         </tr>
       </table>
       {% if shop.url %}
     <table class="link secondary-action-cell">
       <tr>
-        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>or</span> Accéder à la boutique</a></td>
+        <td class="link__cell"><a href="{{ shop.url }}" class="link__text"><span class='or'>or</span> Visit our store</a></td>
       </tr>
     </table>
 {% endif %}
@@ -97,66 +93,6 @@ Si vous êtes prêt à compléter votre commande, votre panier attend votre reto
     </td>
   </tr>
 </table>
-
-          <table class="row section">
-  <tr>
-    <td class="section__cell">
-      <center>
-        <table class="container">
-          <tr>
-            <td>
-              <h3>Articles dans votre panier</h3>
-            </td>
-          </tr>
-        </table>
-        <table class="container">
-          <tr>
-            <td>
-              
-            
-<table class="row">
-  {% for line in line_items %}
-  <tr class="order-list__item">
-    <td class="order-list__item__cell">
-      <table>
-        <td>
-          {% if line.image %}
-            <img src="{{ line | img_url: 'compact_cropped' }}" align="left" width="60" height="60" class="order-list__product-image"/>
-          {% endif %}
-        </td>
-        <td class="order-list__product-description-cell">
-          {% if line.product.title %}
-            {% assign line_title = line.product.title %}
-          {% else %}
-            {% assign line_title = line.title %}
-          {% endif %}
-
-          {% if line.quantity < line.quantity %}
-            {% capture line_display %} {{ line.quantity }} of {{ line.quantity }} {% endcapture %}
-          {% else %}
-            {% assign line_display = line.quantity  %}
-          {% endif %}
-
-          <span class="order-list__item-title">{{ line_title }} × {{ line_display }}</span><br/>
-
-          {% if line.variant.title != 'Default Title' %}
-            <span class="order-list__item-variant">{{ line.variant.title }}</span>
-          {% endif %}
-        </td>
-      </table>
-    </td>
-  </tr>{% endfor %}
-</table>
-
-
-            </td>
-          </tr>
-        </table>
-      </center>
-    </td>
-  </tr>
-</table>
-
           <table class="row footer">
   <tr>
     <td class="footer__cell">
@@ -164,7 +100,7 @@ Si vous êtes prêt à compléter votre commande, votre panier attend votre reto
         <table class="container">
           <tr>
             <td>
-              <p class="disclaimer__subtext">Si vous avez des questions, répondez à cet email ou bien contactez-nous à <a href="mailto:{{ shop.email }}">{{ shop.email }}</a></p>
+              <p class="disclaimer__subtext">If you have any questions, reply to this email or contact us at <a href="mailto:{{ shop.email }}">{{ shop.email }}</a></p>
             </td>
           </tr>
         </table>
