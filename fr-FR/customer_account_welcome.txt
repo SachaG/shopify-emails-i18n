@@ -1,4 +1,4 @@
-{% capture email_title %}Bienvenu sur {{ shop.name }}! {% endcapture %}
+{% capture email_title %}Bienvenue sur {{ shop.name }}! {% endcapture %}
 {% capture email_body %}Vous avez activé votre compte utilisateur. La prochaine fois que vous faites des achats chez nous, connectez vous pour un passage de commande plus rapide. {% endcapture %}
 
 <!DOCTYPE html>
