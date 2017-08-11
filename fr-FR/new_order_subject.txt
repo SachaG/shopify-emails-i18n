@@ -1,1 +1,1 @@
-[{{shop_name}}] Commande {{ name }} placée par {{ billing_address.name }}{% if has_high_risks? %} (Risque de fraude){% endif %}
+[{{shop_name}}] Commande {{ name }} passée par {{ billing_address.name }}{% if has_high_risks? %} (Risque de fraude){% endif %}
