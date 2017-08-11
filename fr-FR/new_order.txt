@@ -1,6 +1,6 @@
 <p>Bonjour {{ shop_name }},</p>
 <p></p>
-<p>{% if customer.name %}{{ customer.name }}{% else %}Quelqu'un{% endif %} a placé une nouvelle commande chez votre boutique, le {{ date | date: "%b %d %I:%M%p" }}:</p>
+<p>{% if customer.name %}{{ customer.name }}{% else %}Quelqu'un{% endif %} a passé une nouvelle commande chez votre boutique, le {{ date | date: "%b %d %I:%M%p" }}:</p>
 <p></p>
 <ul>  {% for line in line_items %} <li> <img src="{{ line | img_url: 'thumb' }}" /> {{ line.quantity }}x {{ line.title }} {% if line.sku != "" %}(SKU: {{line.sku}}){% endif %} pour {{ line.price | money }} chacun </li> {% endfor %} </ul>
 <a href="https://{{ shop.permanent_domain }}/admin/orders/{{ id }}">Voir la commande {{order_name}} </a>
