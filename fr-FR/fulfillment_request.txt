@@ -1,6 +1,6 @@
 <p>{{ service_name }},</p>
 <br>
-<p>Veuillez exécuter la commande {{ name }}.</p>
+<p>Veuillez finaliser la commande {{ name }}.</p>
 <p>Nombre d'articles: {{ fulfillment.item_count }}</p>
 <p>Articles uniques: {{ fulfillment.fulfillment_line_items.size }}</p>
 <br>
