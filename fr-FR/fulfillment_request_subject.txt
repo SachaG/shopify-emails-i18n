@@ -1,1 +1,1 @@
-Demande d'exécution de commande pour {{ shop_name }}
+Demande de finalisation de commande pour {{ shop_name }}
