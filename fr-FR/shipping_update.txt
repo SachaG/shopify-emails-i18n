@@ -1,5 +1,5 @@
 {% capture email_title %}L'état de votre livraison a été mis à jour {% endcapture %}
-{% capture email_body %}Les articles suivants ont étés mis à jour avec de nouvelles informations de livraison.{% endcapture %}
+{% capture email_body %}Les articles suivants ont été mis à jour avec de nouvelles informations de livraison.{% endcapture %}
 
 <!DOCTYPE html>
 <html lang="en">
