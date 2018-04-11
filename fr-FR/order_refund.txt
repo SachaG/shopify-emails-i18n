@@ -257,7 +257,7 @@
 <tr class="subtotal-line">
   <td class="subtotal-line__title">
     <p>
-      <span>Refund</span>
+      <span>Remboursement</span>
         <br>
         <small>{{ refund_method_title | capitalize }}</small>
     </p>
